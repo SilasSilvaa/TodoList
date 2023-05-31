@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactHTMLElement } from 'react';
 import { Trash, Check } from 'phosphor-react';
 import { Container, Task } from './styles';
 import { api } from '../../lib/api';
@@ -23,23 +23,21 @@ export function Home() {
     getTasks();
   }, []);
 
-  async function inputIsChecked(taskChecked, task) {
-    if (taskChecked) {
-      await api.put(`/tasks/${task.id}`, {
-        id: task.id,
-        description: task.description,
-        completed: taskChecked,
-      });
+  async function inputIsChecked(task: TaskProps, e: any) {
+    const value = e.target.checked;
+    console.log(value);
 
-      setTasks([...tasks, task]);
-    } else if (taskChecked === false) {
-      await api.put(`/tasks/${task.id}`, {
+    await api
+      .put(`/tasks/${task.id}`, {
         id: task.id,
         description: task.description,
-        completed: false,
+        completed: value,
+      })
+      .then((res) => {
+        const response = tasks.map((task) => task.id !== res.data.id);
+
+        console.log(response);
       });
-      setTasks([...tasks, task]);
-    }
   }
 
   return (
@@ -49,7 +47,7 @@ export function Home() {
           <Task key={task.id} ischecked={task.completed}>
             <input
               defaultChecked={task.completed}
-              onChange={(e) => inputIsChecked(e.target.checked, task)}
+              onChange={(e) => inputIsChecked(task, e)}
               type="checkbox"
               id={task.id}
             />

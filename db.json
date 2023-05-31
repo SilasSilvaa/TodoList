@@ -3,7 +3,7 @@
     {
       "id": "1",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure amet",
-      "completed": false
+      "completed": true
     },
     {
       "id": "2",
@@ -18,7 +18,7 @@
     {
       "id": "4",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure amet",
-      "completed": false
+      "completed": true
     }
   ]
 }
