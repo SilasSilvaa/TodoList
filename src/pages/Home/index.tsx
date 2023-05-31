@@ -25,7 +25,6 @@ export function Home() {
 
   async function inputIsChecked(task: TaskProps, e: any) {
     const value = e.target.checked;
-    console.log(value);
 
     await api
       .put(`/tasks/${task.id}`, {
@@ -34,9 +33,10 @@ export function Home() {
         completed: value,
       })
       .then((res) => {
-        const response = tasks.map((task) => task.id !== res.data.id);
+        const response = tasks.filter((task) => task.id === res.data.id);
 
-        console.log(response);
+        // console.log(response[0]);
+        setTasks(response);
       });
   }
 
