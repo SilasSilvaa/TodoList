@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactHTMLElement } from 'react';
+import { useState, useEffect } from 'react';
 import { Trash, Check } from 'phosphor-react';
 import { Container, Task } from './styles';
 import { api } from '../../lib/api';
@@ -16,6 +16,7 @@ export function Home() {
   useEffect(() => {
     async function getTasks() {
       await api.get('/tasks').then((task) => {
+        // console.log(task.data);
         setTasks(task.data);
       });
     }
@@ -33,11 +34,18 @@ export function Home() {
         completed: value,
       })
       .then((res) => {
-        const response = tasks.filter((task) => task.id === res.data.id);
+        console.log(res.data);
 
-        // console.log(response[0]);
-        setTasks(response);
+        const response = tasks.filter((task) => task.id !== res.data.id);
+        setTasks([...response, res.data]);
       });
+  }
+
+  async function handleDeleteTask(task: TaskProps) {
+    // const response = await api.delete(`/tasks/${task.id}`).then((res) => {
+    //   console.log(res.data);
+    // });
+    // console.log(response);
   }
 
   return (
@@ -55,7 +63,7 @@ export function Home() {
               <Check size={20} />
             </label>
             <p>{task.description}</p>
-            <Trash size={25} />
+            <Trash size={25} onClick={() => handleDeleteTask(task)} />
           </Task>
         ))}
       </Container>
