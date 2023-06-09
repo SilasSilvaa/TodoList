@@ -6,9 +6,9 @@ interface TaskProps {
   id: string;
   description: string;
   completed: boolean;
-  created: string;
+  created?: string;
+  finished?: string;
 }
-[];
 
 export function Home() {
   const [tasks, setTasks] = useState<TaskProps[]>([]);
@@ -23,6 +23,7 @@ export function Home() {
     }
   }, []);
 
+  //Adicionando uma nova tarefa
   function handleAddTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -45,6 +46,40 @@ export function Home() {
     localStorage.setItem('@tasks', JSON.stringify([...tasks, data]));
   }
 
+  //Remover tarefa
+  function handleRemoveTask(task: TaskProps) {
+    const currentId = task.id;
+
+    if (currentId) {
+      const data = tasks.filter((task) => task.id !== currentId);
+      localStorage.setItem('@tasks', JSON.stringify(data));
+      setTasks(data);
+    }
+  }
+
+  //Atualizando Status da task para finalizada
+  function markCurrentTaskAsFinished(
+    currentTask: TaskProps,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const inputChecked = e.target.checked;
+
+    const data = tasks.map((task) => {
+      if (task.id === currentTask.id) {
+        return {
+          id: task.id,
+          description: task.description,
+          completed: inputChecked,
+        };
+      } else {
+        return task;
+      }
+    });
+
+    setTasks(data);
+    localStorage.setItem('@tasks', JSON.stringify(data));
+  }
+
   return (
     <>
       <Container>
@@ -55,13 +90,15 @@ export function Home() {
                 defaultChecked={task.completed}
                 type="checkbox"
                 id={task.id}
+                onChange={(e) => markCurrentTaskAsFinished(task, e)}
               />
               <label htmlFor={task.id}>
                 <Check size={20} />
               </label>
               <p>{task.description}</p>
+              <span>{task.finished}</span>
               <span>{task.created}</span>
-              <Trash size={25} />
+              <Trash size={25} onClick={() => handleRemoveTask(task)} />
             </Task>
           ))}
         </Content>
