@@ -4,11 +4,21 @@ import styled from "styled-components";
 export const Container = styled.section`
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    flex-direction: column;
+    /* padding: 2rem 0; */
+`
+
+export const Content = styled.div`
+    display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 2rem;
+    height: 25rem;
+    overflow-y: auto;
+    overflow-x: none;
 `
+
+
 
 interface isChecked {
     ischecked: true | false
@@ -63,6 +73,9 @@ export const Task = styled.div<isChecked>`
         padding: 0.5rem;
         text-decoration: ${props => props.ischecked ? 'line-through' : 'none'} ;
     }
+    span {
+        color: ${props => props.theme["gray-300"]};
+    }
 
     svg{
         cursor: pointer;
@@ -71,5 +84,50 @@ export const Task = styled.div<isChecked>`
     svg:hover{
         transition: color 0.2s ease-in;
         color: ${props => props.theme.danger};
+    }
+`
+
+export const ContentInput = styled.div`
+    
+    width: 100%;    
+    form {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        
+        input {
+            flex: 1;
+            height: 3rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            background: ${props => props.theme["gray-500"]};
+            border: 0;
+            color: ${props => props.theme["gray-100"]}
+        }
+    }
+
+`
+
+export const SubmitButton = styled.button`
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    width: 6rem;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: ${props => props.theme["blue-dark"]};
+    color: ${props => props.theme["gray-100"]};
+    
+    border: 0;
+    border-radius: 8px;
+    font-weight:bold;
+    
+    cursor: pointer;
+    
+    &:hover{
+    transition: background-color 0.2s ease-in;
+    background: ${props => props.theme["blue"]};
     }
 `

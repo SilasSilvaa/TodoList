@@ -1,8 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Header } from '../../components/Header';
-import { Container, Content, LinkPage } from './styles';
-
-import { NavLink } from 'react-router-dom';
+import { Container, Content } from './styles';
+import { LinkRedirect } from '../../components/LinkRedirect';
 
 export function Layout() {
   return (
@@ -10,10 +9,7 @@ export function Layout() {
       <Container>
         <Header />
         <Content>
-          <LinkPage>
-            <NavLink to={'/'}>Tarefas em andamento</NavLink>
-            <NavLink to={'/completed'}>Tarefas completadas</NavLink>
-          </LinkPage>
+          <LinkRedirect />
           <Outlet />
         </Content>
       </Container>
