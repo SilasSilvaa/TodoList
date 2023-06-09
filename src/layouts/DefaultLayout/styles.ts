@@ -13,7 +13,6 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     width: 75rem;
-    height: 35rem;
     padding: .5rem;
     gap: 2rem;
 `

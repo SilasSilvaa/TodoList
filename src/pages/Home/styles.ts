@@ -13,7 +13,7 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 25rem;
+    height: 20rem;
     overflow-y: auto;
     overflow-x: none;
 `
