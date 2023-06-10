@@ -3,12 +3,15 @@ import { Router } from './Router';
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './styles/theme/default';
 import { GlobalStyle } from './global';
+import { TaskContextProvider } from './contexts/TaskContexts';
 
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
-        <Router />
+        <TaskContextProvider>
+          <Router />
+        </TaskContextProvider>
       </BrowserRouter>
       <GlobalStyle />
     </ThemeProvider>
