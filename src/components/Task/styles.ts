@@ -13,7 +13,6 @@ export const TaskContent = styled.div<isChecked>`
     gap: 2rem;
 
     width: 70rem;
-    height: 4rem;
     
     border-radius: 8px;
     background: ${props => props.theme["gray-500"]};

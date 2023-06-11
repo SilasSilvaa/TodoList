@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const ContentInput = styled.div`
     
-    width: 100%;    
+    width: 100%;
     form {
         display: flex;
         gap: 0.5rem;
