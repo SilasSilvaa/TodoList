@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContexts';
 
 import { TaskContent } from './styles';
-import { Check, Trash } from 'phosphor-react';
+import { Check, Trash, NotePencil } from 'phosphor-react';
 
 import { formatDistance } from 'date-fns';
 import { pt } from 'date-fns/locale';
@@ -40,6 +40,7 @@ export function Task({ data }: TaskDataProps) {
               locale: pt,
             })}
         </span>
+        <NotePencil size={25} />
 
         <Trash size={25} onClick={() => handleRemoveTask(data)} />
       </TaskContent>

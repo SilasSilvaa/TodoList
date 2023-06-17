@@ -2,6 +2,8 @@ import { Task } from '../../components/Task';
 import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContexts';
 import { Container, Content } from './styles';
+import { Header } from '../../components/Header';
+import { LinkRedirect } from '../../components/LinkRedirect';
 
 export function Completed() {
   const { tasks } = useContext(TaskContext);
@@ -23,6 +25,8 @@ export function Completed() {
   return (
     <>
       <Container>
+        <Header />
+        <LinkRedirect />
         <Content>
           {tasksCompleted.map((task) => (
             <Task key={task.id} data={task} />
