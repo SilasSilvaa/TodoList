@@ -11,9 +11,6 @@ export const TaskContent = styled.div<isChecked>`
 
     padding: 1rem;
     gap: 2rem;
-
-    width: 70rem;
-    
     border-radius: 8px;
     background: ${props => props.theme["gray-500"]};
 
@@ -24,6 +21,7 @@ export const TaskContent = styled.div<isChecked>`
     input[type="checkbox"]{
         display: none;
     }
+    
     label{
         width: 1.25rem;
         height: 1.25rem;

@@ -3,8 +3,11 @@ import styled from "styled-components";
 
 export const LinkPage = styled.div`
     display: flex;
+    /* width: 75vw; */
     height: 3rem;
+
     padding: 1rem;
+    /* margin: 2rem 0; */
     border-radius: 8px;
     background: ${props => props.theme["gray-500"]};
     gap: 1rem;
