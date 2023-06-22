@@ -59,8 +59,13 @@ export const TaskContent = styled.div<isChecked>`
         cursor: pointer;
     }
 
-    svg:hover{
+    svg:hover:last-child{
         transition: color 0.2s ease-in;
         color: ${props => props.theme.danger};
+    }
+    
+    svg:hover{
+        transition: color 0.2s ease-in;
+        color: ${props => props.theme.blue};
     }
 `
