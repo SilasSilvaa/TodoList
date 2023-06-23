@@ -8,29 +8,19 @@ import { LinkRedirect } from '../../components/LinkRedirect';
 export function Completed() {
   const { tasks } = useContext(TaskContext);
 
-  const tasksCompleted = tasks.filter((task) => task.completed === true);
-
-  // const tasksCompleted = tasks.map((task) => {
-  //   if (task.completed === true) {
-  //     return {
-  //       id: task.id,
-  //       description: task.description,
-  //       completed: task.completed,
-  //       created: task.created,
-  //     };
-  //   } else {
-  //     return task;
-  //   }
-  // });
   return (
     <>
       <Container>
         <Header />
         <LinkRedirect />
         <Content>
-          {tasksCompleted.map((task) => (
-            <Task key={task.id} data={task} />
-          ))}
+          {tasks.length > 0 ? (
+            tasks.map(
+              (task) => task.completed && <Task key={task.id} data={task} />
+            )
+          ) : (
+            <span>Sem tarefas concluidas...</span>
+          )}
         </Content>
       </Container>
     </>

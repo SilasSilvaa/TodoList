@@ -17,8 +17,12 @@ interface TaskDataProps {
 }
 
 export function Task({ data }: TaskDataProps) {
-  const { markCurrentTaskAsFinished, handleRemoveTask } =
-    useContext(TaskContext);
+  const {
+    changeValueInput,
+    markCurrentTask,
+    handleRemoveTask,
+    handleEditTask,
+  } = useContext(TaskContext);
 
   return (
     <>
@@ -27,12 +31,16 @@ export function Task({ data }: TaskDataProps) {
           defaultChecked={data.completed}
           type="checkbox"
           id={data.id}
-          onChange={(e) => markCurrentTaskAsFinished(data, e)}
+          onChange={() => markCurrentTask(data)}
         />
         <label htmlFor={data.id}>
           <Check size={20} />
         </label>
-        <p>{data.description}</p>
+        <input
+          type="text"
+          disabled={changeValueInput}
+          value={data.description}
+        />
         <span>
           {!data.completed &&
             formatDistance(new Date(data.created), new Date(), {
@@ -40,7 +48,7 @@ export function Task({ data }: TaskDataProps) {
               locale: pt,
             })}
         </span>
-        <NotePencil size={25} />
+        <NotePencil size={25} onClick={() => handleEditTask(data)} />
 
         <Trash size={25} onClick={() => handleRemoveTask(data)} />
       </TaskContent>

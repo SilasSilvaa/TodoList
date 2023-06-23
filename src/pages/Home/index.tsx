@@ -15,9 +15,13 @@ export function Home() {
         <Header />
         <LinkRedirect />
         <Content>
-          {tasks.map((task) => (
-            <Task key={task.id} data={task} />
-          ))}
+          {tasks.length > 0 ? (
+            tasks.map(
+              (task) => !task.completed && <Task key={task.id} data={task} />
+            )
+          ) : (
+            <span>Sem Tarefas...</span>
+          )}
         </Content>
         <Search />
       </Container>

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 interface isChecked {
-    ischecked: true | false
+    ischecked: true | false;
 }
 
 export const TaskContent = styled.div<isChecked>`
@@ -12,7 +12,6 @@ export const TaskContent = styled.div<isChecked>`
     padding: 1rem;
     gap: 2rem;
     border-radius: 8px;
-    background: ${props => props.theme["gray-500"]};
 
     &:not(:first-child){
         margin-top: 1rem;
@@ -45,11 +44,17 @@ export const TaskContent = styled.div<isChecked>`
         }
     }
 
-    p{
+    input[type="text"]{
         flex: 1;
         padding: 0.5rem;
         color: ${props => props.ischecked ? props.theme["gray-300"] : props.theme["gray-100"]};
-        text-decoration: ${props => props.ischecked ? 'line-through' : 'none'} ;
+        text-decoration: ${props => props.ischecked && 'line-through'} ;
+        background-color: ${props => props.theme["gray-600"]};
+        border: 0;
+        
+        &:focus{
+            outline: none;
+        }
     }
     span {
         color: ${props => props.theme["gray-300"]};
@@ -68,4 +73,17 @@ export const TaskContent = styled.div<isChecked>`
         transition: color 0.2s ease-in;
         color: ${props => props.theme.blue};
     }
+
+    animation: addNewTask 0.3s;
+
+    @keyframes addNewTask {
+        from{
+            transform: translateY(10px);
+        }
+
+        to{
+            transform: translateY(0);
+        }
+    }
+        
 `

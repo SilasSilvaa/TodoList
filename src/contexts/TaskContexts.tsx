@@ -5,13 +5,12 @@ export const TaskContext = createContext({} as TaskContextProps);
 interface TaskContextProps {
   tasks: Task[];
   inputValue: string;
+  changeValueInput: boolean;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   handleAddTask: (e: React.FormEvent<HTMLFormElement>) => void;
   handleRemoveTask: (task: Task) => void;
-  markCurrentTaskAsFinished: (
-    task: Task,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => void;
+  markCurrentTask: (task: Task) => void;
+  handleEditTask: (task: Task) => void;
 }
 
 interface Task {
@@ -27,8 +26,9 @@ interface ChildrenProps {
 
 export function TaskContextProvider({ children }: ChildrenProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [tasksFineshed, setTasksFineshed] = useState<Task[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
+
+  const [changeValueInput, setChangeValueInput] = useState<boolean>(true);
 
   useEffect(() => {
     const response = localStorage.getItem('@tasks');
@@ -42,7 +42,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   function handleAddTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const newId = String(Math.floor(Math.random() * 1000) + 1);
+    const newId = String(Math.floor(Math.random() * 10000) + 1);
 
     if (inputValue === '') {
       alert('Escreva uma tarefa');
@@ -58,7 +58,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
 
     setTasks((state) => [...state, data]);
     setInputValue('');
-    // localStorage.setItem('@tasks', JSON.stringify([...tasks, data]));
+    localStorage.setItem('@tasks', JSON.stringify([...tasks, data]));
   }
 
   //Remover tarefa
@@ -72,61 +72,37 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     }
   }
 
-  //Atualizando Status da task para finalizada
-  function markCurrentTaskAsFinished(
-    currentTask: Task,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const inputChecked = e.target.checked;
+  //Atualizando Status da task para finalizada ou em andamento
+  function markCurrentTask(currentTask: Task) {
     const taskIndex = tasks.findIndex((task) => task.id === currentTask.id);
 
-    const data = tasks.map((task) => {
-      if (task.id === currentTask.id) {
-        return {
-          id: task.id,
-          description: task.description,
-          completed: inputChecked,
-          created: task.created,
-        };
-      } else {
-        return task;
-      }
-    });
+    const updateTask: Task[] = [...tasks];
+    updateTask[taskIndex] = {
+      ...currentTask,
+      completed: !currentTask.completed,
+    };
 
-    if (inputChecked && data[taskIndex].completed === true) {
-      setTasksFineshed([...tasksFineshed, data[taskIndex]]);
-    } else {
-      const data = tasks.filter((task) => task.completed === false);
-
-      setTasks(data);
-    }
-
-    // console.log(data[taskIndex]);
-    // if (data[taskIndex].completed === true) {
-    //   let taskResolved = tasks.filter((task) => task.id === data[taskIndex].id);
-
-    //   setTasksFineshed(taskResolved);
-    //   console.log(tasksFineshed);
-    // }
-
-    // setTasksFineshed([...tasksFineshed, data[taskIndex]]);
-
-    // setTasks(data);
-    // localStorage.setItem('@tasks', JSON.stringify(data));
+    setTimeout(() => {
+      setTasks(updateTask);
+      localStorage.setItem('@tasks', JSON.stringify(updateTask));
+    }, 500);
   }
-  console.log(tasks);
-  console.log('--------------');
-  console.log(tasksFineshed);
+
+  function handleEditTask({ data }: Task) {
+    setChangeValueInput(false);
+  }
 
   return (
     <TaskContext.Provider
       value={{
         tasks,
         inputValue,
+        changeValueInput,
         setInputValue,
         handleAddTask,
         handleRemoveTask,
-        markCurrentTaskAsFinished,
+        markCurrentTask,
+        handleEditTask,
       }}
     >
       {children}
