@@ -2,8 +2,8 @@ import { Task } from '../../components/Task';
 import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContexts';
 import { Container, Content } from './styles';
-import { Header } from '../../components/Header';
 import { LinkRedirect } from '../../components/LinkRedirect';
+import { Header } from '../../components/Header';
 
 export function Completed() {
   const { tasks } = useContext(TaskContext);

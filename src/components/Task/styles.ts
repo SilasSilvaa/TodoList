@@ -56,6 +56,7 @@ export const TaskContent = styled.div<isChecked>`
             outline: none;
         }
     }
+    
     span {
         color: ${props => props.theme["gray-300"]};
     }

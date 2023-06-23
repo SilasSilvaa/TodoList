@@ -88,7 +88,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     }, 500);
   }
 
-  function handleEditTask({ data }: Task) {
+  function handleEditTask({}: Task) {
     setChangeValueInput(false);
   }
 
