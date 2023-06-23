@@ -36,6 +36,17 @@ export const TaskContent = styled.div<isChecked>`
         }
     }
     input[type="checkbox"]:checked + label {
+        transition: background 0.2s ease-out;
+        background-color: ${props => props.theme.blue};
+
+        svg{
+            display: block;
+            color: ${props => props.theme["gray-100"]}
+        }
+    }
+
+    input[type="checkbox"]+ label:hover {
+        transition: background 0.2s ease-out;
         background-color: ${props => props.theme.blue};
 
         svg{
