@@ -17,12 +17,8 @@ interface TaskDataProps {
 }
 
 export function Task({ data }: TaskDataProps) {
-  const {
-    changeValueInput,
-    markCurrentTask,
-    handleRemoveTask,
-    handleEditTask,
-  } = useContext(TaskContext);
+  const { markCurrentTask, handleRemoveTask, handleEditTask } =
+    useContext(TaskContext);
 
   return (
     <>
@@ -38,7 +34,7 @@ export function Task({ data }: TaskDataProps) {
         </label>
         <input
           type="text"
-          disabled={changeValueInput}
+          // disabled={changeValueInput}
           value={data.description}
         />
 

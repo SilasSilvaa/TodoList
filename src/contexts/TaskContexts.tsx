@@ -28,7 +28,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
 
-  const [changeValueInput, setChangeValueInput] = useState<boolean>(true);
+  const [changeValueInput, setChangeValueInput] = useState<boolean>(false);
 
   useEffect(() => {
     const response = localStorage.getItem('@tasks');
@@ -81,6 +81,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       ...currentTask,
       completed: !currentTask.completed,
     };
+    setChangeValueInput((state) => !state);
 
     setTimeout(() => {
       setTasks(updateTask);
@@ -90,6 +91,8 @@ export function TaskContextProvider({ children }: ChildrenProps) {
 
   function handleEditTask({}: Task) {
     setChangeValueInput(false);
+
+    setInputValue(task.description);
   }
 
   return (
