@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Container, Content } from './styles';
 import { TaskContext } from '../../contexts/TaskContexts';
 import { Task } from '../../components/Task';
-import { Search } from './components/Search';
+import { TaskInputRenderer } from './components/TaskInputRenderer';
 import { LinkRedirect } from '../../components/LinkRedirect';
 import { Header } from '../../components/Header';
 
@@ -23,7 +23,7 @@ export function Home() {
             <span>Sem Tarefas...</span>
           )}
         </Content>
-        <Search />
+        <TaskInputRenderer />
       </Container>
     </>
   );
