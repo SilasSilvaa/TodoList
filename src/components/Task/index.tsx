@@ -32,11 +32,7 @@ export function Task({ data }: TaskDataProps) {
         <label htmlFor={data.id}>
           <Check size={20} />
         </label>
-        <input
-          type="text"
-          // disabled={changeValueInput}
-          value={data.description}
-        />
+        <p>{data.description}</p>
 
         <span>
           {!data.completed &&

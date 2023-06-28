@@ -55,17 +55,11 @@ export const TaskContent = styled.div<isChecked>`
         }
     }
 
-    input[type="text"]{
+    p{
         flex: 1;
         padding: 0.5rem;
         color: ${props => props.ischecked ? props.theme["gray-300"] : props.theme["gray-100"]};
         text-decoration: ${props => props.ischecked && 'line-through'} ;
-        background-color: ${props => props.theme["gray-600"]};
-        border: 0;
-        
-        &:focus{
-            outline: none;
-        }
     }
     
     span {
