@@ -13,7 +13,6 @@ interface TaskContextProps {
   tasks: Task[];
   inputValue: string;
   inputRef: RefObject<HTMLInputElement>;
-  // changeValueInput: boolean;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   handleAddNewTask: (e: React.FormEvent<HTMLFormElement>) => void;
   handleRemoveTask: (task: Task) => void;
@@ -35,7 +34,7 @@ interface ChildrenProps {
 export function TaskContextProvider({ children }: ChildrenProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
-  // const [changeValueInput, setChangeValueInput] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<Task | null>();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -49,17 +48,25 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   //Adicionando uma nova tarefa
   function handleAddNewTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const isValidInput = checkInput();
 
-    if (tasks.length === 100) {
-      alert('Limite de 100 tarefas atingido, por favor exclua uma!');
+    if (isEditing && isValidInput) {
+      const currentIndex = tasks.findIndex((task) => task.id === isEditing.id);
+
+      const updateTask: Task[] = [...tasks];
+      updateTask[currentIndex] = {
+        ...isEditing,
+        description: inputValue,
+      };
+
+      setTasks(updateTask);
+      setInputValue('');
+      setIsEditing(null);
       return;
-    } else {
-      CheckValidTask(tasks);
     }
 
-    if (inputValue !== '') {
+    if (isValidInput) {
       const id = checkValidId(tasks);
-
       const data: Task = {
         id: id,
         description: inputValue,
@@ -70,24 +77,34 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       setTasks((state) => [...state, data]);
       setInputValue('');
       localStorage.setItem('@tasks', JSON.stringify([...tasks, data]));
-    } else {
-      alert('Escreva uma tarefa');
-      return;
     }
   }
 
-  function CheckValidTask(tasks: Task[]) {
+  function checkInput() {
     const tasksDescription = tasks.map((task) => task.description.trimEnd());
 
-    if (tasksDescription.includes(inputValue.trimEnd())) {
-      return alert('Tarefa já cadastrada!');
-    }
+    try {
+      if (inputValue === '') {
+        throw new Error('Preencha uma tarefa!');
+      }
 
-    return;
+      if (tasks.length === 100) {
+        throw new Error('Limite de tarefas atingido!');
+      }
+
+      if (tasksDescription.includes(inputValue.trimEnd())) {
+        throw new Error('Tarefa já cadastrada');
+      }
+
+      return true;
+    } catch (err) {
+      console.log((err as Error).message);
+      return false;
+    }
   }
 
   function checkValidId(tasks: Task[]) {
-    const newId = String(Math.floor(Math.random() * 100) + 1);
+    const newId = String(Math.floor(Math.random() * 1000) + 1);
     const currentIds = tasks.map((task) => task.id);
 
     if (currentIds.includes(newId)) {
@@ -117,7 +134,6 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       ...currentTask,
       completed: !currentTask.completed,
     };
-    // setChangeValueInput((state) => !state);
 
     setTimeout(() => {
       setTasks(updateTask);
@@ -126,9 +142,23 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   }
 
   function handleEditTask(data: Task) {
-    // setChangeValueInput(false);
+    setIsEditing(data);
     inputRef.current?.focus();
     setInputValue(data.description);
+  }
+
+  function editing(data: Task) {
+    // setIsEditing(true);
+
+    const taskIndex = tasks.findIndex((task) => task.description === data.id);
+
+    const updateTask: Task[] = [...tasks];
+    updateTask[taskIndex] = {
+      ...data,
+      description: inputValue,
+    };
+
+    // setIsEditing(false);
   }
 
   return (
@@ -137,7 +167,6 @@ export function TaskContextProvider({ children }: ChildrenProps) {
         tasks,
         inputValue,
         inputRef,
-        // changeValueInput,
         setInputValue,
         handleAddNewTask,
         handleRemoveTask,
