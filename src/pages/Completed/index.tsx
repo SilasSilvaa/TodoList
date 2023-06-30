@@ -1,4 +1,4 @@
-import { Task } from '../../components/Task';
+import { Tasks } from '../../components/Tasks';
 import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContexts';
 import { Container, Content } from './styles';
@@ -15,9 +15,7 @@ export function Completed() {
         <LinkRedirect />
         <Content>
           {tasks.length > 0 ? (
-            tasks.map(
-              (task) => task.completed && <Task key={task.id} data={task} />
-            )
+            tasks.map((task) => task.completed && <Tasks />)
           ) : (
             <span>Sem tarefas concluidas...</span>
           )}
