@@ -5,6 +5,9 @@ import { defaultTheme } from './styles/theme/default';
 import { GlobalStyle } from './global';
 import { TaskContextProvider } from './contexts/TaskContexts';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -14,6 +17,7 @@ export function App() {
         </TaskContextProvider>
       </BrowserRouter>
       <GlobalStyle />
+      <ToastContainer autoClose={2000} />
     </ThemeProvider>
   );
 }

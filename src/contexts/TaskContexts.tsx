@@ -7,6 +7,8 @@ import {
   RefObject,
 } from 'react';
 
+import { toast } from 'react-toastify';
+
 export const TaskContext = createContext({} as TaskContextProps);
 
 interface TaskContextProps {
@@ -48,7 +50,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   //Adicionando uma nova tarefa
   function handleAddNewTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const isValidInput = checkInput();
+    const isValidInput = checkIsValidInput();
 
     if (isEditing && isValidInput) {
       const currentIndex = tasks.findIndex((task) => task.id === isEditing.id);
@@ -59,9 +61,10 @@ export function TaskContextProvider({ children }: ChildrenProps) {
         description: inputValue,
       };
 
-      setTasks(updateTask);
       setInputValue('');
       setIsEditing(null);
+      setTasks(updateTask);
+      localStorage.setItem('@tasks', JSON.stringify(updateTask));
       return;
     }
 
@@ -79,13 +82,16 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       localStorage.setItem('@tasks', JSON.stringify([...tasks, data]));
     }
   }
-
-  function checkInput() {
+  function checkIsValidInput() {
     const tasksDescription = tasks.map((task) => task.description.trimEnd());
-
+    const notify = (msg: string) => {
+      toast.error(msg, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    };
     try {
       if (inputValue === '') {
-        throw new Error('Preencha uma tarefa!');
+        throw new Error('Preencha o campo!');
       }
 
       if (tasks.length === 100) {
@@ -98,7 +104,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
 
       return true;
     } catch (err) {
-      console.log((err as Error).message);
+      notify((err as Error).message);
       return false;
     }
   }
@@ -145,20 +151,6 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     setIsEditing(data);
     inputRef.current?.focus();
     setInputValue(data.description);
-  }
-
-  function editing(data: Task) {
-    // setIsEditing(true);
-
-    const taskIndex = tasks.findIndex((task) => task.description === data.id);
-
-    const updateTask: Task[] = [...tasks];
-    updateTask[taskIndex] = {
-      ...data,
-      description: inputValue,
-    };
-
-    // setIsEditing(false);
   }
 
   return (
