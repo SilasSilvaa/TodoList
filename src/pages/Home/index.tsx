@@ -1,5 +1,5 @@
 import { Container, Content } from './styles';
-import { Tasks } from '../../components/Tasks';
+import { Task } from '../../components/Task';
 import { TaskInputRenderer } from './components/TaskInputRenderer';
 import { LinkRedirect } from '../../components/LinkRedirect';
 import { Header } from '../../components/Header';
@@ -19,7 +19,7 @@ export function Home() {
             <span>Sem Tarefas...</span>
           )} */}
 
-          <Tasks />
+          <Task />
         </Content>
         <TaskInputRenderer />
       </Container>

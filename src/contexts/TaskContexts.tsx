@@ -15,6 +15,8 @@ interface TaskContextProps {
   tasks: Task[];
   inputValue: string;
   inputRef: RefObject<HTMLInputElement>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   handleAddNewTask: (e: React.FormEvent<HTMLFormElement>) => void;
   handleRemoveTask: (task: Task) => void;
@@ -35,9 +37,12 @@ interface ChildrenProps {
 
 export function TaskContextProvider({ children }: ChildrenProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
+
   const [inputValue, setInputValue] = useState<string>('');
-  const [isEditing, setIsEditing] = useState<Task | null>();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [editingTask, seteditingTask] = useState<Task>({});
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
     const response = localStorage.getItem('@tasks');
@@ -53,16 +58,18 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     const isValidInput = checkIsValidInput();
 
     if (isEditing && isValidInput) {
-      const currentIndex = tasks.findIndex((task) => task.id === isEditing.id);
+      const currentIndex = tasks.findIndex(
+        (task) => task.id === editingTask.id
+      );
 
       const updateTask: Task[] = [...tasks];
       updateTask[currentIndex] = {
-        ...isEditing,
+        ...editingTask,
         description: inputValue,
       };
 
       setInputValue('');
-      setIsEditing(null);
+      // setIsEditing();
       setTasks(updateTask);
       localStorage.setItem('@tasks', JSON.stringify(updateTask));
       return;
@@ -82,6 +89,8 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       localStorage.setItem('@tasks', JSON.stringify([...tasks, data]));
     }
   }
+
+  // Valida se o input é valido
   function checkIsValidInput() {
     const tasksDescription = tasks.map((task) => task.description.trimEnd());
     const notify = (msg: string) => {
@@ -109,6 +118,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     }
   }
 
+  // Valida se o id é valido
   function checkValidId(tasks: Task[]) {
     const newId = String(Math.floor(Math.random() * 1000) + 1);
     const currentIds = tasks.map((task) => task.id);
@@ -147,8 +157,10 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     }, 500);
   }
 
+  //Editando uma tarefa
   function handleEditTask(data: Task) {
-    setIsEditing(data);
+    setIsEditing((state) => !state);
+    seteditingTask(data);
     inputRef.current?.focus();
     setInputValue(data.description);
   }
@@ -159,6 +171,8 @@ export function TaskContextProvider({ children }: ChildrenProps) {
         tasks,
         inputValue,
         inputRef,
+        isEditing,
+        setIsEditing,
         setInputValue,
         handleAddNewTask,
         handleRemoveTask,
