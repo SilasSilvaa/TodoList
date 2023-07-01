@@ -11,7 +11,6 @@ export function Task() {
   const {
     tasks,
     isEditing,
-    setIsEditing,
     markCurrentTask,
     handleRemoveTask,
     handleEditTask,
@@ -40,13 +39,13 @@ export function Task() {
               })}
           </span>
 
-          {isEditing ? (
-            <NotePencil size={25} onClick={() => handleEditTask(task)} />
-          ) : (
+          {/* {isEditing ? (
             <X size={25} onClick={() => handleEditTask(task)} />
-          )}
+          ) : ( */}
+          <NotePencil size={25} onClick={() => handleEditTask(task)} />
+          {/* )} */}
 
-          <Trash size={25} onClick={() => setIsEditing(false)} />
+          <Trash size={25} onClick={() => handleRemoveTask(task)} />
         </TaskContent>
       ))}
     </>
