@@ -6,8 +6,7 @@ import {
   useRef,
   RefObject,
 } from 'react';
-
-import { toast } from 'react-toastify';
+import { toastContent, toastMessages } from '../utils/ToasMessages';
 
 export const TaskContext = createContext({} as TaskContextProps);
 
@@ -16,7 +15,6 @@ interface TaskContextProps {
   inputValue: string;
   inputRef: RefObject<HTMLInputElement>;
   isEditing: boolean;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   handleAddNewTask: (e: React.FormEvent<HTMLFormElement>) => void;
   handleRemoveTask: (task: Task) => void;
@@ -41,7 +39,12 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   const [inputValue, setInputValue] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [editingTask, seteditingTask] = useState<Task>({});
+  const [editingTask, setEditingTask] = useState<Task>({
+    id: '',
+    description: '',
+    completed: false,
+    created: new Date(),
+  });
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
@@ -69,8 +72,9 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       };
 
       setInputValue('');
-      // setIsEditing();
       setTasks(updateTask);
+      setIsEditing(false);
+      toastMessages(toastContent.taskEditing);
       localStorage.setItem('@tasks', JSON.stringify(updateTask));
       return;
     }
@@ -86,6 +90,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
 
       setTasks((state) => [...state, data]);
       setInputValue('');
+      toastMessages(toastContent.createdTask);
       localStorage.setItem('@tasks', JSON.stringify([...tasks, data]));
     }
   }
@@ -93,27 +98,22 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   // Valida se o input é valido
   function checkIsValidInput() {
     const tasksDescription = tasks.map((task) => task.description.trimEnd());
-    const notify = (msg: string) => {
-      toast.error(msg, {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    };
     try {
       if (inputValue === '') {
-        throw new Error('Preencha o campo!');
+        throw new Error(toastContent.inputIsEmpty);
       }
 
       if (tasks.length === 100) {
-        throw new Error('Limite de tarefas atingido!');
+        throw new Error(toastContent.limitCreateTasks);
       }
 
       if (tasksDescription.includes(inputValue.trimEnd())) {
-        throw new Error('Tarefa já cadastrada');
+        throw new Error(toastContent.taskExits);
       }
 
       return true;
-    } catch (err) {
-      notify((err as Error).message);
+    } catch (err: any) {
+      toastMessages(err.message);
       return false;
     }
   }
@@ -137,7 +137,9 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     if (currentId) {
       const data = tasks.filter((task) => task.id !== currentId);
       localStorage.setItem('@tasks', JSON.stringify(data));
+
       setTasks(data);
+      toastMessages(toastContent.deletedTask);
     }
   }
 
@@ -160,9 +162,10 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   //Editando uma tarefa
   function handleEditTask(data: Task) {
     setIsEditing((state) => !state);
-    seteditingTask(data);
+
     inputRef.current?.focus();
     setInputValue(data.description);
+    setEditingTask(data);
   }
 
   return (
@@ -172,7 +175,6 @@ export function TaskContextProvider({ children }: ChildrenProps) {
         inputValue,
         inputRef,
         isEditing,
-        setIsEditing,
         setInputValue,
         handleAddNewTask,
         handleRemoveTask,
