@@ -4,12 +4,12 @@ import { ContentInput, SubmitButton } from './styles';
 import { useContext } from 'react';
 
 export function TaskInputRenderer() {
-  const { inputValue, inputRef, handleAddNewTask, setInputValue } =
+  const { inputValue, inputRef, handleAddTask, setInputValue } =
     useContext(TaskContext);
 
   return (
     <ContentInput>
-      <form onSubmit={(e) => handleAddNewTask(e)}>
+      <form onSubmit={(e) => handleAddTask(e)}>
         <input
           ref={inputRef}
           type="text"
