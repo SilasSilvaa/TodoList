@@ -12,14 +12,16 @@ export const TaskContext = createContext({} as TaskContextProps);
 
 interface TaskContextProps {
   tasks: Task[];
+  editingTask: Task;
   inputValue: string;
   inputRef: RefObject<HTMLInputElement>;
   isEditing: boolean;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
-  handleAddNewTask: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleAddTask: (e: React.FormEvent<HTMLFormElement>) => void;
   handleRemoveTask: (task: Task) => void;
   markCurrentTask: (task: Task) => void;
-  handleEditTask: (task: Task) => void;
+  handleUpdateTask: (task: Task) => void;
+  handleCancelUpdateTask: () => void;
 }
 
 interface Task {
@@ -56,7 +58,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   }, []);
 
   //Adicionando uma nova tarefa
-  function handleAddNewTask(e: React.FormEvent<HTMLFormElement>) {
+  function handleAddTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const isValidInput = checkIsValidInput();
 
@@ -73,6 +75,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
 
       setInputValue('');
       setTasks(updateTask);
+      inputRef.current?.blur();
       setIsEditing(false);
       toastMessages(toastContent.taskEditing);
       localStorage.setItem('@tasks', JSON.stringify(updateTask));
@@ -153,33 +156,41 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       completed: !currentTask.completed,
     };
 
-    setTimeout(() => {
-      setTasks(updateTask);
-      localStorage.setItem('@tasks', JSON.stringify(updateTask));
-    }, 500);
+    // setTimeout(() => {
+    setTasks(updateTask);
+    localStorage.setItem('@tasks', JSON.stringify(updateTask));
+    // }, 500);
   }
 
   //Editando uma tarefa
-  function handleEditTask(data: Task) {
-    setIsEditing((state) => !state);
-
-    inputRef.current?.focus();
+  function handleUpdateTask(data: Task) {
+    // console.log(isEditing);
+    setIsEditing(true);
     setInputValue(data.description);
+    inputRef.current?.focus();
     setEditingTask(data);
+  }
+
+  function handleCancelUpdateTask() {
+    setIsEditing(false);
+    setInputValue('');
+    inputRef.current?.blur();
   }
 
   return (
     <TaskContext.Provider
       value={{
         tasks,
+        editingTask,
         inputValue,
         inputRef,
         isEditing,
+        handleCancelUpdateTask,
         setInputValue,
-        handleAddNewTask,
+        handleAddTask,
         handleRemoveTask,
         markCurrentTask,
-        handleEditTask,
+        handleUpdateTask,
       }}
     >
       {children}
