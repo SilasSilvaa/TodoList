@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContexts';
 
 import { TaskContent } from './styles';
-import { Check, Trash, NotePencil, X } from 'phosphor-react';
+import { Check, NotePencil, Trash, X } from 'phosphor-react';
 
 import { formatDistance } from 'date-fns';
 import { pt } from 'date-fns/locale';
@@ -10,16 +10,23 @@ import { pt } from 'date-fns/locale';
 export function Task() {
   const {
     tasks,
+    editingTask,
     isEditing,
     markCurrentTask,
     handleRemoveTask,
-    handleEditTask,
+    handleUpdateTask,
+    handleCancelUpdateTask,
   } = useContext(TaskContext);
 
   return (
     <>
+      {/* {console.log(isEditing)} */}
       {tasks.map((task) => (
-        <TaskContent key={task.id} ischecked={task.completed}>
+        <TaskContent
+          key={task.id}
+          ischecked={task.completed}
+          isEditing={isEditing && editingTask?.id === task.id}
+        >
           <input
             defaultChecked={task.completed}
             type="checkbox"
@@ -39,11 +46,11 @@ export function Task() {
               })}
           </span>
 
-          {/* {isEditing ? (
-            <X size={25} onClick={() => handleEditTask(task)} />
-          ) : ( */}
-          <NotePencil size={25} onClick={() => handleEditTask(task)} />
-          {/* )} */}
+          {isEditing && editingTask?.id === task.id ? (
+            <X size={25} onClick={() => handleCancelUpdateTask()} />
+          ) : (
+            <NotePencil size={25} onClick={() => handleUpdateTask(task)} />
+          )}
 
           <Trash size={25} onClick={() => handleRemoveTask(task)} />
         </TaskContent>

@@ -1,7 +1,9 @@
 import styled from "styled-components"
+import { Check, Trash, NotePencil, X } from 'phosphor-react';
 
 interface isChecked {
-    ischecked: true | false;
+    ischecked: boolean;
+    isEditing: boolean;
 }
 
 export const TaskContent = styled.div<isChecked>`
@@ -58,7 +60,7 @@ export const TaskContent = styled.div<isChecked>`
     p{
         flex: 1;
         padding: 0.5rem;
-        color: ${props => props.ischecked ? props.theme["gray-300"] : props.theme["gray-100"]};
+        color: ${props => props.ischecked || props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
         text-decoration: ${props => props.ischecked && 'line-through'} ;
     }
     
@@ -68,19 +70,13 @@ export const TaskContent = styled.div<isChecked>`
 
     svg{
         cursor: pointer;
-    }
-
-    svg:hover:last-child{
         transition: color 0.2s ease-in;
-        color: ${props => props.theme.danger};
+        
+        &:hover{
+            transition: color 0.2s ease-in;
+            color: ${props => props.theme.blue};
+        }
     }
-    
-    svg:hover{
-        transition: color 0.2s ease-in;
-        color: ${props => props.theme.blue};
-    }
-
-    animation: addNewTask 0.3s;
 
     @keyframes addNewTask {
         from{
@@ -91,5 +87,28 @@ export const TaskContent = styled.div<isChecked>`
             transform: translateY(0);
         }
     }
+    
+    @keyframes editTask {
+        from{
+            transform: scale(1);
+        }
+
+        to{
+            rotate:  scale(1.05);
+        }
+    }
         
 `
+// export const SvgEditingTask = styled(NotePencil).attrs((props: isChecked) => {
+//     color: states => props.isEditing ? states.themedanger : ''
+//     // isEdting: props.
+// })`
+// `
+// export const SvgTrash = styled(Trash)`
+//     color: ${props => props.theme.danger};
+
+// `
+// export const SvgEditingTask = styled(NotePencil) <isChecked>`
+// color: ${props => props.isEditing ? props.theme.danger : ''};
+
+// `
