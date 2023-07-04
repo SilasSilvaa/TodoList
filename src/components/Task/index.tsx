@@ -20,41 +20,45 @@ export function Task() {
 
   return (
     <>
-      {/* {console.log(isEditing)} */}
-      {tasks.map((task) => (
-        <TaskContent
-          key={task.id}
-          ischecked={task.completed}
-          isEditing={isEditing && editingTask?.id === task.id}
-        >
-          <input
-            defaultChecked={task.completed}
-            type="checkbox"
-            id={task.id}
-            onChange={() => markCurrentTask(task)}
-          />
-          <label htmlFor={task.id}>
-            <Check size={20} />
-          </label>
-          <p>{task.description}</p>
+      {tasks.length > 0 ? (
+        tasks.map((task) => (
+          <TaskContent
+            key={task.id}
+            ischecked={task.completed}
+            isEditing={isEditing && editingTask?.id === task.id}
+          >
+            <input
+              defaultChecked={task.completed}
+              type="checkbox"
+              id={task.id}
+              disabled={isEditing}
+              onChange={() => markCurrentTask(task)}
+            />
+            <label htmlFor={task.id}>
+              <Check size={20} />
+            </label>
+            <p>{task.description}</p>
 
-          <span>
-            {!task.completed &&
-              formatDistance(new Date(task.created), new Date(), {
-                addSuffix: true,
-                locale: pt,
-              })}
-          </span>
+            <span>
+              {!task.completed &&
+                formatDistance(new Date(task.created), new Date(), {
+                  addSuffix: true,
+                  locale: pt,
+                })}
+            </span>
 
-          {isEditing && editingTask?.id === task.id ? (
-            <X size={25} onClick={() => handleCancelUpdateTask()} />
-          ) : (
-            <NotePencil size={25} onClick={() => handleUpdateTask(task)} />
-          )}
+            {isEditing && editingTask?.id === task.id ? (
+              <X size={25} onClick={() => handleCancelUpdateTask()} />
+            ) : (
+              <NotePencil size={25} onClick={() => handleUpdateTask(task)} />
+            )}
 
-          <Trash size={25} onClick={() => handleRemoveTask(task)} />
-        </TaskContent>
-      ))}
+            <Trash size={25} onClick={() => handleRemoveTask(task)} />
+          </TaskContent>
+        ))
+      ) : (
+        <span> Sem tarefas em andamneto...</span>
+      )}
     </>
   );
 }
