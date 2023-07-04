@@ -1,10 +1,10 @@
-import { PlusCircle } from 'phosphor-react';
+import { NotePencil, PlusCircle } from 'phosphor-react';
 import { TaskContext } from '../../../../contexts/TaskContexts';
 import { ContentInput, SubmitButton } from './styles';
 import { useContext } from 'react';
 
 export function TaskInputRenderer() {
-  const { inputValue, inputRef, handleAddTask, setInputValue } =
+  const { inputValue, inputRef, isEditing, handleAddTask, setInputValue } =
     useContext(TaskContext);
 
   return (
@@ -18,8 +18,17 @@ export function TaskInputRenderer() {
           onChange={(e) => setInputValue(e.target.value)}
         />
         <SubmitButton type="submit">
-          Criar
-          <PlusCircle size={25} />
+          {isEditing ? (
+            <>
+              Editar
+              <NotePencil size={25} />{' '}
+            </>
+          ) : (
+            <>
+              Criar
+              <PlusCircle size={25} />
+            </>
+          )}
         </SubmitButton>
       </form>
     </ContentInput>
