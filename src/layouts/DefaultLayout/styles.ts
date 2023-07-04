@@ -6,11 +6,11 @@ export const Container = styled.main`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* height: 80vh; */
 `
 
 export const Content = styled.div`
     display: flex;
     flex-direction: column;
     width: 75vw;
+
 `

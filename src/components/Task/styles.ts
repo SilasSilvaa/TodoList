@@ -27,8 +27,8 @@ export const TaskContent = styled.div<isChecked>`
         width: 1.25rem;
         height: 1.25rem;
         border-radius: 50%;
-        border: 2px solid ${props => props.theme.blue};
-        cursor: pointer;
+        border: 2px solid ${props => props.isEditing ? props.theme["gray-300"] : props.theme.blue};
+        cursor: ${props => props.isEditing ? 'not-allowed' : 'pointer'};
         display: flex;
         align-items: center;
         justify-content: center;
@@ -47,14 +47,19 @@ export const TaskContent = styled.div<isChecked>`
         }
     }
 
-    input[type="checkbox"]+ label:hover {
-        transition: background 0.2s ease-out;
-        background-color: ${props => props.theme.blue};
-
-        svg{
-            display: block;
-            color: ${props => props.theme["gray-100"]}
+    input[type="checkbox"]+ label {
+        ${props => props.isEditing ? `          
+        `: `
+        &:hover {
+            transition: background 0.2s ease-out;
+            background: ${props.theme["blue"]};
+            
+            svg {
+                display: block;
+                color: ${props.theme["gray-100"]};
+            }
         }
+        `}
     }
 
     p{
@@ -99,16 +104,3 @@ export const TaskContent = styled.div<isChecked>`
     }
         
 `
-// export const SvgEditingTask = styled(NotePencil).attrs((props: isChecked) => {
-//     color: states => props.isEditing ? states.themedanger : ''
-//     // isEdting: props.
-// })`
-// `
-// export const SvgTrash = styled(Trash)`
-//     color: ${props => props.theme.danger};
-
-// `
-// export const SvgEditingTask = styled(NotePencil) <isChecked>`
-// color: ${props => props.isEditing ? props.theme.danger : ''};
-
-// `
