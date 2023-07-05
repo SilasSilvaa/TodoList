@@ -37,7 +37,6 @@ interface ChildrenProps {
 
 export function TaskContextProvider({ children }: ChildrenProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [finishedTasks, setFinishedTasks] = useState<Task[]>([]);
 
   const [inputValue, setInputValue] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,14 +51,9 @@ export function TaskContextProvider({ children }: ChildrenProps) {
 
   useEffect(() => {
     const taskInProgress = localStorage.getItem('@tasksInProgress');
-    const finishedTask = localStorage.getItem('@finishedTasks');
 
     if (taskInProgress) {
       setTasks(JSON.parse(taskInProgress));
-    }
-
-    if (finishedTask) {
-      setFinishedTasks(JSON.parse(finishedTask));
     }
   }, []);
 
@@ -165,13 +159,8 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       completed: !currentTask.completed,
     };
 
-    if (updateTask[taskIndex].completed) {
-      setFinishedTasks(updateTask);
-      localStorage.setItem('@finishedTask', JSON.stringify(updateTask));
-    } else {
-      setTasks(updateTask);
-      localStorage.setItem('@tasksInProgress', JSON.stringify(updateTask));
-    }
+    setTasks(updateTask);
+    localStorage.setItem('@tasksInProgress', JSON.stringify(updateTask));
   }
 
   //Editando uma tarefa
