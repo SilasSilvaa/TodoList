@@ -124,15 +124,19 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     }
   }
 
+  interface CheckValidIdProps {
+    validId: string;
+  }
+
   // Valida se o id é valido
-  function checkValidId(tasks: Task[]) {
+  function checkValidId(tasks: Task[]): CheckValidIdProps {
     const newId = String(Math.floor(Math.random() * 1000) + 1);
     const currentIds = tasks.map((task) => task.id);
 
     if (currentIds.includes(newId)) {
       return checkValidId(tasks);
     } else {
-      return newId;
+      return { validId: newId };
     }
   }
 
