@@ -125,7 +125,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   }
 
   // Valida se o id é valido
-  function checkValidId(tasks: Task[]): CheckValidIdProps {
+  function checkValidId(tasks: Task[]) {
     const newId = String(Math.floor(Math.random() * 1000) + 1);
     const currentIds = tasks.map((task) => task.id);
 
