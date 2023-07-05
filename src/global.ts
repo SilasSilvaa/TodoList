@@ -23,4 +23,34 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 400;
         font-size: 1rem;
     }
+
+::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1A1A1A;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #262626;
+  border-radius: 8px;
+}
+
+scrollbar {
+  width: 8px;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+scrollbar[orient="vertical"] {
+  background-color: #1A1A1A;
+}
+
+scrollbar-thumb {
+  background-color: #262626;
+  border-radius: 8px;
+}
+
 `
