@@ -7,6 +7,7 @@ import {
   RefObject,
 } from 'react';
 import { toastContent, toastMessages } from '../utils/ToasMessages';
+import { checkIsValidInput, checkValidId } from '../utils/ValidationInput';
 
 export const TaskContext = createContext({} as TaskContextProps);
 
@@ -24,7 +25,7 @@ interface TaskContextProps {
   handleCancelUpdateTask: () => void;
 }
 
-interface Task {
+export interface Task {
   id: string;
   description: string;
   completed: boolean;
@@ -60,7 +61,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   //Adicionando uma nova tarefa
   function handleAddTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const isValidInput = checkIsValidInput();
+    const isValidInput = checkIsValidInput(inputValue, tasks);
 
     if (isEditing && isValidInput) {
       const currentIndex = tasks.findIndex(
@@ -98,41 +99,6 @@ export function TaskContextProvider({ children }: ChildrenProps) {
         '@tasksInProgress',
         JSON.stringify([...tasks, data])
       );
-    }
-  }
-
-  // Valida se o input é valido
-  function checkIsValidInput() {
-    const tasksDescription = tasks.map((task) => task.description.trimEnd());
-    try {
-      if (inputValue === '') {
-        throw new Error(toastContent.inputIsEmpty);
-      }
-
-      if (tasks.length === 100) {
-        throw new Error(toastContent.limitCreateTasks);
-      }
-
-      if (tasksDescription.includes(inputValue.trimEnd())) {
-        throw new Error(toastContent.taskExits);
-      }
-
-      return true;
-    } catch (err: any) {
-      toastMessages(err.message);
-      return false;
-    }
-  }
-
-  // Valida se o id é valido
-  function checkValidId(tasks: Task[]) {
-    const newId = String(Math.floor(Math.random() * 1000) + 1);
-    const currentIds = tasks.map((task) => task.id);
-
-    if (currentIds.includes(newId)) {
-      return checkValidId(tasks);
-    } else {
-      return newId;
     }
   }
 
