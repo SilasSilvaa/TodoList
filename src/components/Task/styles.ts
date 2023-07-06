@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { Check, Trash, NotePencil, X } from 'phosphor-react';
 
 interface isChecked {
     ischecked: boolean;
