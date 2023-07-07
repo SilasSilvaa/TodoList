@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "../../styles/theme/default";
 
 
 export const Container = styled.main`
@@ -13,4 +14,8 @@ export const Content = styled.div`
     flex-direction: column;
     width: 75vw;
 
+/* 
+@media ${device.tablet} {
+    width: 95vw;
+} */
 `

@@ -10,7 +10,8 @@ export const TaskContent = styled.div<isChecked>`
     display: flex;
     align-items: center;
     justify-content: center;
-
+    word-break: break-all;
+ 
     padding: 1rem;
     gap: 2rem;
     border-radius: 8px;
@@ -55,7 +56,6 @@ export const TaskContent = styled.div<isChecked>`
         @media ${device.tablet}{
             
             flex-direction: column;
-            word-break: break-all;
             align-items: flex-start;
             
         }

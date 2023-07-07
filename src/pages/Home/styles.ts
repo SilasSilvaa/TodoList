@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "../../styles/theme/default";
 
 
 export const Container = styled.section`
@@ -6,6 +7,10 @@ export const Container = styled.section`
     flex-direction: column;
     gap: 1rem;
     height: calc(100vh - 10rem);
+
+    @media ${device.smartphone} {
+        height: 70vh;
+    }
     `
 
 export const Content = styled.div`
