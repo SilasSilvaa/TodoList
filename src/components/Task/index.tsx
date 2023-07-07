@@ -45,13 +45,13 @@ export function Task({ data }: TaskProps) {
         </label>
         <p>{data.description}</p>
 
-        <span>
+        {/* <span>
           {!data.completed &&
             formatDistance(new Date(data.created), new Date(), {
               addSuffix: true,
               locale: pt,
             })}
-        </span>
+        </span> */}
 
         {isEditing && editingTask?.id === data.id ? (
           <X size={25} onClick={() => handleCancelUpdateTask()} />
