@@ -14,3 +14,14 @@ export const defaultTheme = {
     'blue': '#4EA8DE',
     'blue-dark': ' #1E6F9F',
 }
+
+const size = {
+    sm: '525px',
+    md: '768px',
+}
+
+export const device = {
+    smartphone: `(max-width: ${size.sm})`,
+    tablet: `(max-width: ${size.md})`
+
+}

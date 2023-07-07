@@ -16,8 +16,6 @@ export const Content = styled.div`
     overflow-y: auto;
     overflow-x: none;
     span{
-        /* font-size: 1.2rem; */
-        /* font-weight: bold; */
         margin: auto;
     }
 

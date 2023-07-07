@@ -1,10 +1,9 @@
 import styled from "styled-components";
+import { device } from "../../styles/theme/default";
 
 
 export const LinkPage = styled.div`
     display: flex;
-    height: 3rem;
-    margin: .2rem 0;
     padding: 1rem;
     border-radius: 8px;
     background: ${props => props.theme["gray-500"]};
@@ -24,4 +23,17 @@ export const LinkPage = styled.div`
             color: ${props => props.theme.blue};
         }
     }
+
+    
+    @media ${device.tablet}{
+        
+    align-items: center;
+    justify-content: center;
+    }
+    
+    @media ${device.smartphone}{
+        flex-direction: column;
+    }
+
 `
+
