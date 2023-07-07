@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContexts';
 
-import { TaskContent } from './styles';
+import { CheckBox, IconsContent, TaskContent } from './styles';
 import { Check, NotePencil, Trash, X } from 'phosphor-react';
 
 // import { formatDistance } from 'date-fns';
@@ -33,16 +33,6 @@ export function Task({ data }: TaskProps) {
         ischecked={data.completed}
         isEditing={isEditing && editingTask?.id === data.id}
       >
-        <input
-          defaultChecked={data.completed}
-          type="checkbox"
-          id={data.id}
-          disabled={isEditing}
-          onChange={() => markCurrentTask(data)}
-        />
-        <label htmlFor={data.id}>
-          <Check size={20} />
-        </label>
         <p>{data.description}</p>
 
         {/* <span>
@@ -52,14 +42,28 @@ export function Task({ data }: TaskProps) {
               locale: pt,
             })}
         </span> */}
+        <IconsContent ischecked={data.completed} isEditing={isEditing}>
+          <CheckBox ischecked={data.completed} isEditing={isEditing}>
+            <input
+              defaultChecked={data.completed}
+              type="checkbox"
+              id={data.id}
+              disabled={isEditing}
+              onChange={() => markCurrentTask(data)}
+            />
+            <label htmlFor={data.id}>
+              <Check size={20} />
+            </label>
+          </CheckBox>
 
-        {isEditing && editingTask?.id === data.id ? (
-          <X size={25} onClick={() => handleCancelUpdateTask()} />
-        ) : (
-          <NotePencil size={25} onClick={() => handleUpdateTask(data)} />
-        )}
+          {isEditing && editingTask?.id === data.id ? (
+            <X size={25} onClick={() => handleCancelUpdateTask()} />
+          ) : (
+            <NotePencil size={25} onClick={() => handleUpdateTask(data)} />
+          )}
 
-        <Trash size={25} onClick={() => handleRemoveTask(data)} />
+          <Trash size={25} onClick={() => handleRemoveTask(data)} />
+        </IconsContent>
       </TaskContent>
     </>
   );

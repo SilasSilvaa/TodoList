@@ -39,10 +39,9 @@ export const SubmitButton = styled.button`
     font-weight:bold;
     
     cursor: pointer;
-    transition: scale 0.2s ease-out;
     
     &:hover{
-    transition: background-color 0.2s ease-in;
+    transition: scale 0.2s ease-out;
     background: ${props => props.theme["blue"]};
     scale: 1.05;
     }

@@ -14,10 +14,6 @@ export function Home() {
           {tasks.map((task) => {
             if (!task.completed) {
               return <Task key={task.id} data={task} />;
-            } else {
-              <>
-                <span>Sem tarefas em andamento....</span>
-              </>;
             }
           })}
         </Content>
