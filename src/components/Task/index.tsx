@@ -4,8 +4,8 @@ import { TaskContext } from '../../contexts/TaskContexts';
 import { TaskContent } from './styles';
 import { Check, NotePencil, Trash, X } from 'phosphor-react';
 
-import { formatDistance } from 'date-fns';
-import { pt } from 'date-fns/locale';
+// import { formatDistance } from 'date-fns';
+// import { pt } from 'date-fns/locale';
 
 interface TaskProps {
   data: {
