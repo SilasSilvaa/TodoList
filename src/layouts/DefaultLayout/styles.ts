@@ -14,8 +14,8 @@ export const Content = styled.div`
     flex-direction: column;
     width: 75vw;
 
-/* 
+
 @media ${device.tablet} {
     width: 95vw;
-} */
+}
 `
