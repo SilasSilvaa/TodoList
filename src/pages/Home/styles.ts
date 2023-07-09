@@ -6,7 +6,9 @@ export const Container = styled.section`
     flex-direction: column;
     gap: 1rem;
     height: calc(100vh - 10rem);
-    `
+    
+    
+`
 
 export const Content = styled.div`
     display: flex;

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { TextHeader } from './styles';
 
 import { ClipboardText } from 'phosphor-react';
@@ -7,7 +8,7 @@ export function Header() {
     <>
       <TextHeader>
         <ClipboardText size={35} />
-        <h1>TodoList</h1>
+        <Link to={'/'}>TodoList</Link>
       </TextHeader>
     </>
   );

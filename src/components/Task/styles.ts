@@ -1,8 +1,11 @@
 import styled from "styled-components"
 import { device } from "../../styles/theme/default";
 
+import { NotePencil, Trash, X } from 'phosphor-react';
+
+
 interface isChecked {
-    ischecked: boolean;
+    ischecked?: boolean;
     isEditing?: boolean;
 }
 
@@ -10,6 +13,7 @@ export const TaskContent = styled.div<isChecked>`
     display: flex;
     align-items: center;
     justify-content: center;
+    
     word-break: break-all;
  
     padding: 1rem;
@@ -23,6 +27,7 @@ export const TaskContent = styled.div<isChecked>`
     
     p{
         flex: 1;
+        transition: color 0.2s ease-in;
         color: ${props => props.ischecked || props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
         text-decoration: ${props => props.ischecked && 'line-through'} ;
     }
@@ -63,13 +68,17 @@ export const TaskContent = styled.div<isChecked>`
 
 export const CheckBox = styled.div<isChecked>`
     label{
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 50%;
-        border: 2px solid ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
         display: flex;
         align-items: center;
         justify-content: center;
+        
+        width: 1.25rem;
+        height: 1.25rem;
+        
+        border-radius: 50%;
+        border: 2px solid ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
+        
+        transition: border 0.2s ease-in;
         
         svg{
             display: none;
@@ -116,33 +125,46 @@ export const IconsContent = styled.div<isChecked>`
     justify-content: center;
     gap: 2rem;
 
-    
     svg{
         cursor: pointer;
         transition: color 0.2s ease-in;
         
         &:hover{
             transition: color 0.2s ease-in;
-            color: ${props => props.theme.blue};
         }
     }
 
-    svg:not(:first-child):not(:last-child){
-        display: ${props => props.ischecked ? 'none' : 'block'};
+`
+
+export const TrashIcon = styled(Trash) <isChecked>`
+
+    color: ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
+    cursor: ${props => props.isEditing && 'not-allowed'};
+    pointer-events: ${props => props.isEditing && 'none'};
+
+    &:hover{
+        color: ${props => props.isEditing ? '' : props.theme.danger};
+    }
+`
+
+export const NotePencilIcon = styled(NotePencil) <isChecked>`
+    pointer-events: ${props => props.isEditing && 'none'};
+    color: ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
+    display: ${props => props.ischecked && 'none'};
         
-        &:hover{
-            transition: color 0.2s ease-in;
-            color: ${props => props.isEditing ? props.theme.danger : props.theme.blue};
-        }
+    &:hover{
+        color: ${props => props.isEditing ? props.theme.danger : props.theme.blue};
     }
 
-    svg:last-child{
-        color: ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
-        cursor: ${props => props.isEditing && 'not-allowed'};
-        pointer-events: ${props => props.isEditing && 'none'};
 
-        &:hover{
-            color: ${props => props.isEditing ? '' : props.theme.danger};
-        }
+`
+
+export const CloseIcon = styled(X) <isChecked> `
+    display: ${props => props.ischecked ? 'none' : 'block'};
+        
+    &:hover{
+        transition: color 0.2s ease-in;
+        color: ${props => props.theme.danger};
     }
+
 `

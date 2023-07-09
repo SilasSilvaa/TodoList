@@ -1,8 +1,15 @@
 import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContexts';
 
-import { CheckBox, IconsContent, TaskContent } from './styles';
-import { Check, NotePencil, Trash, X } from 'phosphor-react';
+import {
+  CheckBox,
+  CloseIcon,
+  IconsContent,
+  NotePencilIcon,
+  TaskContent,
+  TrashIcon,
+} from './styles';
+import { Check } from 'phosphor-react';
 
 // import { formatDistance } from 'date-fns';
 // import { pt } from 'date-fns/locale';
@@ -57,12 +64,25 @@ export function Task({ data }: TaskProps) {
           </CheckBox>
 
           {isEditing && editingTask?.id === data.id ? (
-            <X size={25} onClick={() => handleCancelUpdateTask()} />
+            <CloseIcon
+              isEditing={isEditing}
+              size={25}
+              onClick={() => handleCancelUpdateTask()}
+            />
           ) : (
-            <NotePencil size={25} onClick={() => handleUpdateTask(data)} />
+            <NotePencilIcon
+              isEditing={isEditing}
+              ischecked={data.completed}
+              size={25}
+              onClick={() => handleUpdateTask(data)}
+            />
           )}
 
-          <Trash size={25} onClick={() => handleRemoveTask(data)} />
+          <TrashIcon
+            isEditing={isEditing}
+            size={25}
+            onClick={() => handleRemoveTask(data)}
+          />
         </IconsContent>
       </TaskContent>
     </>

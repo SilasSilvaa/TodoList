@@ -8,6 +8,7 @@ export const LinkPage = styled.div`
     border-radius: 8px;
     background: ${props => props.theme["gray-500"]};
     gap: 1rem;
+    z-index: 99;
     a{
         
         font-weight: bold;
