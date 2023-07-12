@@ -4,12 +4,12 @@ import { device } from "../../styles/theme/default";
 import { NotePencil, Trash, X } from 'phosphor-react';
 
 
-interface isChecked {
+interface TaskStylesProps {
     ischecked?: boolean;
     isEditing?: boolean;
 }
 
-export const TaskContent = styled.div<isChecked>`
+export const TaskContent = styled.div<TaskStylesProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,7 +66,7 @@ export const TaskContent = styled.div<isChecked>`
         }
 `
 
-export const CheckBox = styled.div<isChecked>`
+export const CheckBox = styled.div<TaskStylesProps>`
     label{
         display: flex;
         align-items: center;
@@ -119,7 +119,7 @@ export const CheckBox = styled.div<isChecked>`
 
 `
 
-export const IconsContent = styled.div<isChecked>`
+export const IconsContent = styled.div<TaskStylesProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,7 +136,7 @@ export const IconsContent = styled.div<isChecked>`
 
 `
 
-export const TrashIcon = styled(Trash) <isChecked>`
+export const TrashIcon = styled(Trash) <TaskStylesProps>`
 
     color: ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
     cursor: ${props => props.isEditing && 'not-allowed'};
@@ -147,7 +147,7 @@ export const TrashIcon = styled(Trash) <isChecked>`
     }
 `
 
-export const NotePencilIcon = styled(NotePencil) <isChecked>`
+export const NotePencilIcon = styled(NotePencil) <TaskStylesProps>`
     pointer-events: ${props => props.isEditing && 'none'};
     color: ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
     display: ${props => props.ischecked && 'none'};
@@ -159,7 +159,7 @@ export const NotePencilIcon = styled(NotePencil) <isChecked>`
 
 `
 
-export const CloseIcon = styled(X) <isChecked> `
+export const CloseIcon = styled(X) <TaskStylesProps> `
     display: ${props => props.ischecked ? 'none' : 'block'};
         
     &:hover{

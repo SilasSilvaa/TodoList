@@ -51,7 +51,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    const taskInProgress = localStorage.getItem('@tasksInProgress');
+    const taskInProgress = localStorage.getItem('@tasks');
 
     if (taskInProgress) {
       setTasks(JSON.parse(taskInProgress));
@@ -79,7 +79,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       inputRef.current?.blur();
       setIsEditing(false);
       toastMessages(toastContent.taskEditing);
-      localStorage.setItem('@tasksInProgress', JSON.stringify(updateTask));
+      localStorage.setItem('@tasks', JSON.stringify(updateTask));
       return;
     }
 
@@ -95,10 +95,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
       setTasks((state) => [...state, data]);
       setInputValue('');
       toastMessages(toastContent.createdTask);
-      localStorage.setItem(
-        '@tasksInProgress',
-        JSON.stringify([...tasks, data])
-      );
+      localStorage.setItem('@tasks', JSON.stringify([...tasks, data]));
     }
   }
 
@@ -108,7 +105,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
 
     if (currentId) {
       const data = tasks.filter((task) => task.id !== currentId);
-      localStorage.setItem('@tasksInProgress', JSON.stringify(data));
+      localStorage.setItem('@tasks', JSON.stringify(data));
 
       setTasks(data);
       toastMessages(toastContent.deletedTask);
@@ -126,7 +123,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     };
 
     setTasks(updateTask);
-    localStorage.setItem('@tasksInProgress', JSON.stringify(updateTask));
+    localStorage.setItem('@tasks', JSON.stringify(updateTask));
   }
 
   //Editando uma tarefa
