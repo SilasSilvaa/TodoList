@@ -36,7 +36,7 @@ export const TaskContent = styled.div<TaskStylesProps>`
         color: ${props => props.theme["gray-300"]};
     }
 
-    
+    animation: addNewTask 0.5s ease-in-out;
 
     @keyframes addNewTask {
         from{
