@@ -15,6 +15,23 @@ export const defaultTheme = {
     'blue-dark': ' #1E6F9F',
 }
 
+export const lightTheme = {
+
+    'gray-700': '#F2F2F2',
+    'gray-600': '#F9F9F9',
+    'gray-500': '#E9E9E9',
+    'gray-400': '#CCCCCC',
+    'gray-300': '#7F7F7F',
+    'gray-200': '#262626',
+    'gray-100': '#0D0D0D',
+    'danger': '#1DAEAE',
+
+    'purple': '#7D7C05',
+    'purple-dark': '#A19F31',
+    'blue': '#C15721',
+    'blue-dark': ' #DE9815',
+}
+
 const size = {
     sm: '525px',
     md: '768px',
