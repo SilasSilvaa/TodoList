@@ -24,7 +24,6 @@ export const LinkPage = styled.div`
             color: ${props => props.theme.blue};
         }
     }
-
     
     @media ${device.tablet}{
         
@@ -38,3 +37,8 @@ export const LinkPage = styled.div`
 
 `
 
+export const SwitchContent = styled.div`
+    display: flex ;
+    flex: 1;
+    justify-content: end;
+`
