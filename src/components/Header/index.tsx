@@ -8,7 +8,7 @@ export function Header() {
     <>
       <TextHeader>
         <ClipboardText size={35} />
-        <Link to={'/'}>TodoList</Link>
+        <Link to={'/'}>To do List</Link>
       </TextHeader>
     </>
   );
