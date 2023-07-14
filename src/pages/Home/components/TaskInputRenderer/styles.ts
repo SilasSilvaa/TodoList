@@ -38,7 +38,7 @@ export const SubmitButton = styled.button`
     gap: 0.5rem;
     padding: 0.5rem;
     background: ${props => props.theme["blue-dark"]};
-    color: ${props => props.theme["gray-100"]};
+    color: ${props => props.theme.white};
     
     border: 0;
     border-radius: 8px;
