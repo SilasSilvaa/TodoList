@@ -1,5 +1,5 @@
 export const defaultTheme = {
-
+    white: '#FFFFFF',
     'gray-700': '#0D0D0D',
     'gray-600': '#1A1A1A',
     'gray-500': '#262626',
@@ -16,7 +16,7 @@ export const defaultTheme = {
 }
 
 export const lightTheme = {
-
+    white: '#FFFFFF',
     'gray-700': '#F2F2F2',
     'gray-600': '#F9F9F9',
     'gray-500': '#E9E9E9',
@@ -24,12 +24,12 @@ export const lightTheme = {
     'gray-300': '#7F7F7F',
     'gray-200': '#262626',
     'gray-100': '#0D0D0D',
-    'danger': '#1DAEAE',
+    'danger': '#E25858',
 
-    'purple': '#7D7C05',
-    'purple-dark': '#A19F31',
-    'blue': '#C15721',
-    'blue-dark': ' #DE9815',
+    'purple': '#8284FA',
+    'purple-dark': '#5E60CE',
+    'blue': '#4EA8DE',
+    'blue-dark': ' #4EA8DE',
 }
 
 const size = {
