@@ -6,7 +6,6 @@ export const Container = styled.section`
     flex-direction: column;
     gap: 1rem;
     height: calc(100vh - 10rem);
-    /* animation: loadingPage 1s ease-in; */
     transition: background 1s ease-in-out;
     border-radius: 0 0 8px 8px;
 
@@ -23,11 +22,11 @@ export const Container = styled.section`
     }
 
     ::-webkit-scrollbar-track {
-    background-color: ${props => props.theme["gray-300"]};
+    background-color: ${props => props.theme.fontColorSecondary};
     }
 
     ::-webkit-scrollbar-thumb {
-    background-color: ${props => props.theme["gray-100"]};
+    background-color: ${props => props.theme.fontColor};
 }
 
     `
@@ -40,8 +39,6 @@ export const Content = styled.div`
     overflow-y: auto;
     overflow-x: none;
     span{
-        /* font-size: 1.2rem; */
-        /* font-weight: bold; */
         margin: auto;
     }
 

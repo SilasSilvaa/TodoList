@@ -15,7 +15,7 @@ interface ChildrenProps {
 }
 
 export function ThemeContextProvider({ children }: ChildrenProps) {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('');
 
   useEffect(() => {
     const currentTheme = localStorage.getItem('@theme');
@@ -25,12 +25,12 @@ export function ThemeContextProvider({ children }: ChildrenProps) {
   }, []);
 
   function toggleTheme() {
-    if (theme === '') {
+    if (theme === 'dark') {
       localStorage.setItem('@theme', 'light');
       setTheme('light');
     } else {
       localStorage.setItem('@theme', 'dark');
-      setTheme('');
+      setTheme('dark');
     }
   }
 

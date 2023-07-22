@@ -5,8 +5,8 @@ import { NotePencil, Trash, X } from 'phosphor-react';
 
 
 interface TaskStylesProps {
-    ischecked?: boolean;
-    isEditing?: boolean;
+    checked?: boolean;
+    editing?: boolean;
 }
 
 export const TaskContent = styled.div<TaskStylesProps>`
@@ -28,12 +28,14 @@ export const TaskContent = styled.div<TaskStylesProps>`
     p{
         flex: 1;
         transition: color 0.2s ease-in;
-        color: ${props => props.ischecked || props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
-        text-decoration: ${props => props.ischecked && 'line-through'} ;
+        color: ${props => props.editing ? props.theme.active : props.theme.fontColor};
+        color: ${props => props.checked && props.theme.fontColorSecondary};
+        text-decoration: ${props => props.checked && 'line-through'} ;
     }
     
     span {
-        color: ${props => props.theme["gray-300"]};
+        margin: 0;
+        color: ${props => props.theme.fontColor};
     }
 
     animation: addNewTask 0.5s ease-in-out;
@@ -67,6 +69,8 @@ export const TaskContent = styled.div<TaskStylesProps>`
 `
 
 export const CheckBox = styled.div<TaskStylesProps>`
+    transition: color 0.2s ease-in;
+
     label{
         display: flex;
         align-items: center;
@@ -76,7 +80,7 @@ export const CheckBox = styled.div<TaskStylesProps>`
         height: 1.25rem;
         
         border-radius: 50%;
-        border: 2px solid ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
+        border: 2px solid ${props => props.editing && props.theme.fontColorSecondary};
         
         transition: border 0.2s ease-in;
         
@@ -93,25 +97,25 @@ export const CheckBox = styled.div<TaskStylesProps>`
     
     input[type="checkbox"]:checked + label {
         transition: background 0.2s ease-out;
-        background-color: ${props => props.theme.blue};
-        border: 2px solid ${props => props.theme.blue};
+        background-color: ${props => props.theme.active};
+        border: 2px solid ${props => props.theme.active};
 
         svg{
             display: block;
-            color: ${props => props.theme["gray-100"]}
+            color: ${props => props.theme.fontColorButton}
         }
     }
 
     input[type="checkbox"]+ label {
-        ${props => !props.isEditing && `
+        ${props => !props.editing && `
         &:hover {
-            border: 2px solid ${props.theme.blue};
+            border: 2px solid ${props.theme.active};
             transition: background 0.2s ease-out;
-            background: ${props.theme["blue"]};
+            background: ${props.theme.active};
             
             svg {
                 display: block;
-                color: ${props.theme["gray-100"]};
+                color: ${props.theme.fontColorButton}
             }
         }
         `}
@@ -119,7 +123,7 @@ export const CheckBox = styled.div<TaskStylesProps>`
 
 `
 
-export const IconsContent = styled.div<TaskStylesProps>`
+export const IconsContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -138,33 +142,32 @@ export const IconsContent = styled.div<TaskStylesProps>`
 
 export const TrashIcon = styled(Trash) <TaskStylesProps>`
 
-    color: ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
-    cursor: ${props => props.isEditing && 'not-allowed'};
-    pointer-events: ${props => props.isEditing && 'none'};
+    color: ${props => props.editing && props.theme.fontColorSecondary};
+    pointer-events: ${props => props.editing && 'none'};
 
     &:hover{
-        color: ${props => props.isEditing ? '' : props.theme.danger};
+        color: ${props => props.editing ? '' : props.theme.hoverDanger};
     }
 `
 
 export const NotePencilIcon = styled(NotePencil) <TaskStylesProps>`
-    pointer-events: ${props => props.isEditing && 'none'};
-    color: ${props => props.isEditing ? props.theme["gray-300"] : props.theme["gray-100"]};
-    display: ${props => props.ischecked && 'none'};
+    pointer-events: ${props => props.editing && 'none'};
+    color: ${props => props.editing && props.theme.fontColorSecondary};
+    display: ${props => props.checked && 'none'};
         
     &:hover{
-        color: ${props => props.isEditing ? props.theme.danger : props.theme.blue};
+        color: ${props => props.editing ? props.theme.hoverDanger : props.theme.active};
     }
 
 
 `
 
 export const CloseIcon = styled(X) <TaskStylesProps> `
-    display: ${props => props.ischecked ? 'none' : 'block'};
+    display: ${props => props.checked ? 'none' : 'block'};
         
     &:hover{
         transition: color 0.2s ease-in;
-        color: ${props => props.theme.danger};
+        color: ${props => props.theme.hoverDanger};
     }
 
 `

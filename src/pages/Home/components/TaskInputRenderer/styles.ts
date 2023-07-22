@@ -14,9 +14,8 @@ export const ContentInput = styled.div`
             height: 3rem;
             padding: 0.5rem;
             border-radius: 8px;
-            background: ${props => props.theme["gray-500"]};
+            background: ${props => props.theme["background-secondary"]};
             border: 0;
-            color: ${props => props.theme["gray-100"]}
         }
     }
     
@@ -37,8 +36,8 @@ export const SubmitButton = styled.button`
     
     gap: 0.5rem;
     padding: 0.5rem;
-    background: ${props => props.theme["blue-dark"]};
-    color: ${props => props.theme.white};
+    background: ${props => props.theme.button};
+    color: ${props => props.theme.fontColorButton};
     
     border: 0;
     border-radius: 8px;
@@ -48,7 +47,7 @@ export const SubmitButton = styled.button`
     
     &:hover{
     transition: scale 0.2s ease-out;
-    background: ${props => props.theme["blue"]};
+    background: ${props => props.theme.active};
     scale: 1.05;
     }
 `
