@@ -26,28 +26,3 @@ export const ContentInput = styled.div`
         }
     }
 `
-
-export const SubmitButton = styled.button`
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    
-    gap: 0.5rem;
-    padding: 0.5rem;
-    background: ${props => props.theme.button};
-    color: ${props => props.theme.fontColorButton};
-    
-    border: 0;
-    border-radius: 8px;
-    font-weight:bold;
-    
-    cursor: pointer;
-    
-    &:hover{
-    transition: scale 0.2s ease-out;
-    background: ${props => props.theme.active};
-    scale: 1.05;
-    }
-`

@@ -14,15 +14,18 @@ export const TaskContext = createContext({} as TaskContextProps);
 interface TaskContextProps {
   tasks: Task[];
   editingTask: Task;
+  deleteTask: Task;
   inputValue: string;
   inputRef: RefObject<HTMLInputElement>;
   isEditing: boolean;
+  toggle: boolean;
+  toggleModal: (data: Task) => void;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
-  handleAddTask: (e: React.FormEvent<HTMLFormElement>) => void;
-  handleRemoveTask: (task: Task) => void;
+  addTask: (e: React.FormEvent<HTMLFormElement>) => void;
+  removeTask: (task: Task) => void;
   markCurrentTask: (task: Task) => void;
-  handleUpdateTask: (task: Task) => void;
-  handleCancelUpdateTask: () => void;
+  updateTask: (task: Task) => void;
+  cancelUpdateTask: () => void;
 }
 
 export interface Task {
@@ -48,7 +51,16 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     completed: false,
     created: new Date(),
   });
+
+  const [deleteTask, setDeleteTask] = useState<Task>({
+    id: '',
+    description: '',
+    completed: false,
+    created: new Date(),
+  });
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
     const taskInProgress = localStorage.getItem('@tasks');
@@ -59,7 +71,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   }, []);
 
   //Adicionando uma nova tarefa
-  function handleAddTask(e: React.FormEvent<HTMLFormElement>) {
+  function addTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const isValidInput = checkIsValidInput(inputValue, tasks);
 
@@ -100,8 +112,9 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   }
 
   //Remover tarefa
-  function handleRemoveTask(task: Task) {
+  function removeTask(task: Task) {
     const currentId = task.id;
+    setToggle((state) => !state);
 
     if (currentId) {
       const data = tasks.filter((task) => task.id !== currentId);
@@ -109,6 +122,7 @@ export function TaskContextProvider({ children }: ChildrenProps) {
 
       setTasks(data);
       toastMessages(toastContent.deletedTask);
+      setToggle(false);
     }
   }
 
@@ -127,17 +141,22 @@ export function TaskContextProvider({ children }: ChildrenProps) {
   }
 
   //Editando uma tarefa
-  function handleUpdateTask(data: Task) {
+  function updateTask(data: Task) {
     setIsEditing(true);
     setInputValue(data.description);
     inputRef.current?.focus();
     setEditingTask(data);
   }
 
-  function handleCancelUpdateTask() {
+  function cancelUpdateTask() {
     setIsEditing(false);
     setInputValue('');
     inputRef.current?.blur();
+  }
+
+  function toggleModal(data: Task) {
+    setToggle((state) => !state);
+    setDeleteTask(data);
   }
 
   return (
@@ -148,12 +167,15 @@ export function TaskContextProvider({ children }: ChildrenProps) {
         inputValue,
         inputRef,
         isEditing,
-        handleCancelUpdateTask,
+        toggle,
+        deleteTask,
+        toggleModal,
+        cancelUpdateTask,
         setInputValue,
-        handleAddTask,
-        handleRemoveTask,
+        addTask,
+        removeTask,
         markCurrentTask,
-        handleUpdateTask,
+        updateTask,
       }}
     >
       {children}

@@ -1,22 +1,11 @@
-import { Container, Content } from './styles';
 import { Task } from '../../components/Task';
+import { Container, Content } from './styles';
 import { TaskInputRenderer } from './components/TaskInputRenderer';
-import { useContext } from 'react';
-import { TaskContext } from '../../contexts/TaskContexts';
+
+import { useTask } from '../../hooks/useTask';
 
 export function Home() {
-  const { tasks } = useContext(TaskContext);
-
-  const taskIsProgress = tasks.filter((task) => {
-    if (!task.completed) {
-      return {
-        id: task.id,
-        description: task.description,
-        created: task.created,
-        completed: task.completed,
-      };
-    }
-  });
+  const { taskIsProgress } = useTask();
 
   return (
     <>

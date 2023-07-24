@@ -1,15 +1,16 @@
 import { NotePencil, PlusCircle } from 'phosphor-react';
 import { TaskContext } from '../../../../contexts/TaskContexts';
-import { ContentInput, SubmitButton } from './styles';
+import { ContentInput } from './styles';
 import { useContext } from 'react';
+import { Button } from '../../../../components/Button';
 
 export function TaskInputRenderer() {
-  const { inputValue, inputRef, isEditing, handleAddTask, setInputValue } =
+  const { inputValue, inputRef, isEditing, addTask, setInputValue } =
     useContext(TaskContext);
 
   return (
     <ContentInput>
-      <form onSubmit={(e) => handleAddTask(e)}>
+      <form onSubmit={(e) => addTask(e)}>
         <input
           ref={inputRef}
           type="text"
@@ -17,19 +18,11 @@ export function TaskInputRenderer() {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <SubmitButton type="submit">
-          {isEditing ? (
-            <>
-              Editar
-              <NotePencil size={25} />{' '}
-            </>
-          ) : (
-            <>
-              Criar
-              <PlusCircle size={25} />
-            </>
-          )}
-        </SubmitButton>
+        {isEditing ? (
+          <Button colorButton="default" content="Editar" svg={<NotePencil />} />
+        ) : (
+          <Button colorButton="default" content="Criar" svg={<PlusCircle />} />
+        )}
       </form>
     </ContentInput>
   );
