@@ -1,6 +1,5 @@
-import { MouseEvent, SVGProps } from 'react';
+import { SVGProps } from 'react';
 import { ButtonComponent } from './styled';
-import { Task } from '../../contexts/TaskContexts';
 
 interface ButtonProps {
   content: string;
