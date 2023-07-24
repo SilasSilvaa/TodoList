@@ -1,9 +1,6 @@
 import styled from "styled-components"
 import { device } from "../../styles/theme/default";
 
-import { NotePencil, Trash, X } from 'phosphor-react';
-
-
 interface TaskStylesProps {
     checked?: boolean;
     editing?: boolean;
@@ -35,7 +32,7 @@ export const TaskContent = styled.div<TaskStylesProps>`
     
     span {
         margin: 0;
-        color: ${props => props.theme.fontColor};
+        color: ${props => props.checked || props.editing ? props.theme.fontColorSecondary : props.theme.fontColor};
     }
 
     animation: addNewTask 0.5s ease-in-out;
@@ -140,7 +137,7 @@ export const IconsContent = styled.div`
 
 `
 
-export const TrashIcon = styled(Trash) <TaskStylesProps>`
+export const TrashIcon = styled.div<TaskStylesProps>`
 
     color: ${props => props.editing && props.theme.fontColorSecondary};
     pointer-events: ${props => props.editing && 'none'};
@@ -150,7 +147,7 @@ export const TrashIcon = styled(Trash) <TaskStylesProps>`
     }
 `
 
-export const NotePencilIcon = styled(NotePencil) <TaskStylesProps>`
+export const NotePencilIcon = styled.div <TaskStylesProps>`
     pointer-events: ${props => props.editing && 'none'};
     color: ${props => props.editing && props.theme.fontColorSecondary};
     display: ${props => props.checked && 'none'};
@@ -162,7 +159,7 @@ export const NotePencilIcon = styled(NotePencil) <TaskStylesProps>`
 
 `
 
-export const CloseIcon = styled(X) <TaskStylesProps> `
+export const CloseIcon = styled.div<TaskStylesProps> `
     display: ${props => props.checked ? 'none' : 'block'};
         
     &:hover{

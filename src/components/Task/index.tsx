@@ -9,10 +9,10 @@ import {
   TaskContent,
   TrashIcon,
 } from './styles';
-import { Check } from 'phosphor-react';
 
-// import { formatDistance } from 'date-fns';
-// import { pt } from 'date-fns/locale';
+import { Check, NotePencil, Trash, X } from 'phosphor-react';
+import { formatDistance } from 'date-fns';
+import { pt } from 'date-fns/locale';
 
 interface TaskProps {
   data: {
@@ -27,30 +27,33 @@ export function Task({ data }: TaskProps) {
   const {
     editingTask,
     isEditing,
+    toggleModal,
     markCurrentTask,
-    handleRemoveTask,
-    handleUpdateTask,
-    handleCancelUpdateTask,
+    updateTask,
+    cancelUpdateTask,
   } = useContext(TaskContext);
 
   return (
     <>
       <TaskContent
         key={data.id}
-        ischecked={data.completed}
-        isEditing={isEditing && editingTask?.id === data.id}
+        checked={data.completed}
+        editing={isEditing && editingTask?.id === data.id}
       >
         <p>{data.description}</p>
 
-        {/* <span>
-          {!data.completed &&
-            formatDistance(new Date(data.created), new Date(), {
+        {data.completed ? (
+          <span>Tarefa finalizada</span>
+        ) : (
+          <span>
+            {formatDistance(new Date(data.created), new Date(), {
               addSuffix: true,
               locale: pt,
             })}
-        </span> */}
-        <IconsContent ischecked={data.completed} isEditing={isEditing}>
-          <CheckBox ischecked={data.completed} isEditing={isEditing}>
+          </span>
+        )}
+        <IconsContent>
+          <CheckBox checked={data.completed} editing={isEditing}>
             <input
               defaultChecked={data.completed}
               type="checkbox"
@@ -64,25 +67,22 @@ export function Task({ data }: TaskProps) {
           </CheckBox>
 
           {isEditing && editingTask?.id === data.id ? (
-            <CloseIcon
-              isEditing={isEditing}
-              size={25}
-              onClick={() => handleCancelUpdateTask()}
-            />
+            <CloseIcon editing={isEditing} onClick={cancelUpdateTask}>
+              <X size={25} />
+            </CloseIcon>
           ) : (
             <NotePencilIcon
-              isEditing={isEditing}
-              ischecked={data.completed}
-              size={25}
-              onClick={() => handleUpdateTask(data)}
-            />
+              editing={isEditing}
+              checked={data.completed}
+              onClick={() => updateTask(data)}
+            >
+              <NotePencil size={25} />
+            </NotePencilIcon>
           )}
 
-          <TrashIcon
-            isEditing={isEditing}
-            size={25}
-            onClick={() => handleRemoveTask(data)}
-          />
+          <TrashIcon editing={isEditing} onClick={() => toggleModal(data)}>
+            <Trash size={25} />
+          </TrashIcon>
         </IconsContent>
       </TaskContent>
     </>
