@@ -19,8 +19,8 @@ interface TaskContextProps {
   inputRef: RefObject<HTMLInputElement>;
   isEditing: boolean;
   toggle: boolean;
-  toggleModal: (data: Task) => void;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
+  toggleModal: (data?: Task) => void;
   addTask: (e: React.FormEvent<HTMLFormElement>) => void;
   removeTask: (task: Task) => void;
   markCurrentTask: (task: Task) => void;
@@ -154,9 +154,12 @@ export function TaskContextProvider({ children }: ChildrenProps) {
     inputRef.current?.blur();
   }
 
-  function toggleModal(data: Task) {
+  function toggleModal(data?: Task) {
     setToggle((state) => !state);
-    setDeleteTask(data);
+
+    if (data) {
+      setDeleteTask(data);
+    }
   }
 
   return (
