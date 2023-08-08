@@ -13,9 +13,11 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     width: 75vw;
+    max-height: 100vh;
 
 
 @media ${device.tablet} {
     width: 95vw;
+    /* max-height: 100vh; */
 }
 `
