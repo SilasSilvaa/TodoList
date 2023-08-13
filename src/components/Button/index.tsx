@@ -1,21 +1,11 @@
-import { SVGProps } from 'react';
+import { ComponentProps, RefObject } from 'react';
 import { ButtonComponent } from './styled';
-import { Task } from '../../contexts/TaskContexts';
 
-interface ButtonProps {
-  content: string;
-  svg: SVGProps<SVGSVGElement>;
+type ButtonProps = ComponentProps<'button'> & {
   colorButton: 'default' | 'delete';
-  onAction?: (task?: Task) => void;
-}
+  ref?: RefObject<HTMLButtonElement>;
+};
 
-export function Button({ colorButton, content, svg, onAction }: ButtonProps) {
-  return (
-    <ButtonComponent colorButton={colorButton} onClick={() => onAction?.()}>
-      <>
-        {content}
-        {svg}
-      </>
-    </ButtonComponent>
-  );
+export function Button({ colorButton, ...props }: ButtonProps) {
+  return <ButtonComponent colorButton={colorButton} {...props} />;
 }
