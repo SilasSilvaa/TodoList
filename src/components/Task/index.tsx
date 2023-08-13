@@ -27,7 +27,7 @@ export function Task({ data }: TaskProps) {
   const {
     editingTask,
     isEditing,
-    toggleModal,
+    deleteCurrentTask,
     markCurrentTask,
     updateTask,
     cancelUpdateTask,
@@ -80,7 +80,10 @@ export function Task({ data }: TaskProps) {
             </NotePencilIcon>
           )}
 
-          <TrashIcon editing={isEditing} onClick={() => toggleModal(data)}>
+          <TrashIcon
+            editing={isEditing}
+            onClick={() => deleteCurrentTask(data)}
+          >
             <Trash size={25} />
           </TrashIcon>
         </IconsContent>
