@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-interface ButtonProps {
-    colorButton: 'delete' | 'default';
+interface ButtonColorProps {
+    colorButton: 'default' | 'delete';
 }
 
-export const ButtonComponent = styled.button<ButtonProps>`
+export const ButtonComponent = styled.button<ButtonColorProps>`
 
     display: flex;
     align-items: center;
