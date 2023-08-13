@@ -18,6 +18,5 @@ export const Content = styled.div`
 
 @media ${device.tablet} {
     width: 95vw;
-    /* max-height: 100vh; */
 }
 `
