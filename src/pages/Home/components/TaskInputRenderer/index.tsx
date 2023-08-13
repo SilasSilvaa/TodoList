@@ -19,9 +19,15 @@ export function TaskInputRenderer() {
           onChange={(e) => setInputValue(e.target.value)}
         />
         {isEditing ? (
-          <Button colorButton="default" content="Editar" svg={<NotePencil />} />
+          <Button colorButton="default">
+            Editar
+            <NotePencil />
+          </Button>
         ) : (
-          <Button colorButton="default" content="Criar" svg={<PlusCircle />} />
+          <Button colorButton="default">
+            Criar
+            <PlusCircle />
+          </Button>
         )}
       </form>
     </ContentInput>

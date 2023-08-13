@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContexts';
 
 export function ModalDeleteTask() {
-  const { deleteTask, removeTask, toggleModal } = useContext(TaskContext);
+  const { deleteTask, removeTask, cancelDelteTask } = useContext(TaskContext);
 
   return (
     <>
@@ -13,19 +13,15 @@ export function ModalDeleteTask() {
         <ModalContent>
           <p>Deseja excluir a tarefa?</p>
           <ButtonContent>
-            <Button
-              content="Excluir"
-              colorButton="delete"
-              svg={<Trash />}
-              onAction={() => removeTask(deleteTask)}
-            />
+            <Button colorButton="delete" onClick={() => removeTask(deleteTask)}>
+              Excluir
+              <Trash />
+            </Button>
 
-            <Button
-              content="Cancelar"
-              svg={<XCircle />}
-              colorButton="default"
-              onAction={toggleModal}
-            />
+            <Button colorButton="default" onClick={cancelDelteTask}>
+              Cancalar
+              <XCircle />
+            </Button>
           </ButtonContent>
         </ModalContent>
       </ModalContainer>
