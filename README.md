@@ -38,3 +38,4 @@ Antes de executar o projeto, certifique-se de ter os seguintes softwares instala
    ```bash
    npm run dev
    ```
+A aplicação será aberta em http://localhost:5173.
